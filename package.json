@@ -25,7 +25,9 @@
     "node-libnmap": "*",
     "nmap": "~1.0.39",
     "node-schedule" : "*",
-    "jsontoxml" : "*"
+    "jsontoxml" : "*",
+    "xml2json" : "*",
+    "unirest" : "*"
   },
   "scripts": {
     "debug": "node debug app.js",

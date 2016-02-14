@@ -40,7 +40,7 @@ module.exports = {
     },
     test: function (req, res) {
 
-        var xml = this.createXML();
+        var xml = this.createXML(req.param('state'));
 
         var unirest = require('unirest');
 
@@ -50,48 +50,16 @@ module.exports = {
         Request
                 .type('text/xml')
                 .send(xml)
+                .headers({'Accept': 'application/json'})
                 .end(function(response){
-                    res.send(response);
+                    var parser = require('xml2json');
+                    var json = parser.toJson(response.body);
+                    res.set('Content-Type', 'application/json');
+                    return res.json(json);
                 });
 
-
-//            var postOptions = {
-//              hostname: '192.168.1.119',
-//              port: 10000,
-//              path: '/smartplug.cgi',
-//              method: 'POST',
-//              headers: {
-//                'Host':'192.168.1.119',
-//                'Content-Type':'text/xml;charset=utf-8',
-//                'Content-Length': xml.toString().length.toString(),
-//              },
-//              body : xml
-//            };
-//            
-//            console.log(postOptions)
-//            
-//            var http = require('http');
-//            
-//            var request = http.request(postOptions, function(res) {
-//              console.log('STATUS: ' + res.statusCode);
-//              console.log('HEADERS: ' + JSON.stringify(res.headers));
-//              res.setEncoding('utf8');
-//              res.on('data', function (chunk) {
-//                console.log('BODY: ' + chunk);
-//              });
-//            });
-//
-//            request.on('error', function(e) {
-//              console.log('problem with request: ' + e.message);
-//            });
-//
-//            // write data to request body
-//            request.end();     
-//            
-//            res.send('Done!'); 
-
     },
-    createXML: function () {
+    createXML: function (state) {
 
         var data = {
             _name: 'SMARTPLUG',
@@ -105,10 +73,35 @@ module.exports = {
                 },
                 _content: {
                     _name: 'Device.System.Power.State',
-                    _content: 'On'
+                    _content: state.toUpperCase()
                 }
             }
         };
+
+//        var data = {
+//            _name: 'SMARTPLUG',
+//            _attrs: {
+//                id: 'edimax'
+//            },
+//            _content: {
+//                _name: 'CMD',
+//                _attrs: {
+//                    id: 'get',
+//                },
+//                _content: {
+//                    _name : "NOW_POWER",
+//                    _content : [
+//                        {
+//                            _name : 'Device.System.Power.NowCurrent'
+//                        },
+//                        {
+//                            _name : 'Device.System.Power.NowPower'
+//                        }
+//                    ]
+//                }
+//                
+//            }
+//        };
 
         var jstoxml = require('jstoxml');
 

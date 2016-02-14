@@ -34,6 +34,12 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
+  },
+  
+  'get /plug/state/:state': {
+    controller: 'PlugController',
+    action: 'test',
+    skipAssets: true
   }
 
   /***************************************************************************
