@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 6.40 scan initiated Sat Feb 13 23:22:36 2016 as: nmap -&#45;host-timeout=120s -oX - -T4 -&#45;host-timeout=120s -oX -sP -p1-1024 192.168.1.118 -->
+<nmaprun scanner="nmap" args="nmap -&#45;host-timeout=120s -oX - -T4 -&#45;host-timeout=120s -oX -sP -p1-1024 192.168.1.118" start="1455402156" startstr="Sat Feb 13 23:22:36 2016" version="6.40" xmloutputversion="1.04">
+<scaninfo type="connect" protocol="tcp" numservices="1024" services="1-1024"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<host starttime="1455402156" endtime="1455402156"><status state="up" reason="conn-refused" reason_ttl="0"/>
+<address addr="192.168.1.118" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="1023">
+<extrareasons reason="conn-refused" count="1023"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="7108" rttvar="457" to="100000"/>
+</host>
+<runstats><finished time="1455402156" timestr="Sat Feb 13 23:22:36 2016" elapsed="0.15" summary="Nmap done at Sat Feb 13 23:22:36 2016; 1 IP address (1 host up) scanned in 0.15 seconds" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

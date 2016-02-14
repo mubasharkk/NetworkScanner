@@ -12,18 +12,37 @@ module.exports = {
         
         var opts = {
             range: [
-              '192.168.1.80/120',
-            ]
+              '192.168.1.1-200',
+            ],
+            flags : ['-sP'] ,
+            ports : '',
         };
 
-        nmap.discover(opts, function(err, report) {
+        nmap.scan(opts, function(err, report) {
           if (err) throw new Error(err);
 
           console.log('-- Sending Response --');
-           return res.json(report);
-//          for (var item in report) {
-//            console.log(report);
-//          }
+          
+          var dt = [];
+          for (var item in report) {
+            for(var i in report[item].host){
+                
+                var values = {
+                    ip : report[item].host[i].address[0]["$"].addr,   
+                    mac : null,   
+                };
+                console.log(report[item].host[i].address[0]["$"]);
+                
+                if(typeof report[item].host[i].address[1] != 'undefined'){
+                    values.mac = report[item].host[i].address[1]["$"].addr;
+                }
+                
+                dt.push(values);
+            }
+            
+          }
+          
+          return res.json(dt);
         });
         
     },
