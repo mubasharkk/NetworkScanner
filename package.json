@@ -25,7 +25,7 @@
     "node-libnmap": "*",
     "nmap": "~1.0.39",
     "node-schedule" : "*",
-    ""
+    "sleep" : "*"
   },
   "scripts": {
     "debug": "node debug app.js",

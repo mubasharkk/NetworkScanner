@@ -10,6 +10,8 @@ module.exports = function scanner() {
         ports: '',
     };
     
+    sails.config.globals.network = [];
+    
     nmap.scan(opts, function (err, report) {
         if (err)
             throw new Error(err);

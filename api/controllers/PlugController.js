@@ -6,18 +6,26 @@
  */
 
 module.exports = {
- 
     list: function (req, res) {
-    
-       var sleep = require('sleep');
-       
-       if (sails.config.globals.network.length < 1){
-           sleep.sleep(10);
-       }
-       
-       return res.json(sails.config.globals.network);
-        
+
+        this.fish(req, res);
+
     },
-    
+    fish: function (req, res) {
+
+        if (sails.config.globals.network.length < 1) {
+            var that = this;
+            setTimeout(function() {
+              that.fish(req, res);
+            }, 5000);
+            
+        } else {
+            
+            return res.json(sails.config.globals.network);
+        }
+
+
+    }
+
 };
 
