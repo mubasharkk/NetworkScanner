@@ -23,7 +23,9 @@
     "sails": "~0.12.0",
     "sails-disk": "~0.10.9",
     "node-libnmap": "*",
-    "nmap": "~1.0.39"
+    "nmap": "~1.0.39",
+    "node-schedule" : "*",
+    ""
   },
   "scripts": {
     "debug": "node debug app.js",
