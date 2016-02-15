@@ -40,28 +40,148 @@ module.exports = {
     },
     test: function (req, res) {
 
-        var xml = this.createXML(req.param('state'));
-
+        var reqType='OFF';
+        var xml = this.createXML(reqType);
+        console.log(xml);
         var unirest = require('unirest');
 
 
-        var Request = unirest.post('http://admin:1234@192.168.1.119:10000/smartplug.cgi');
+        var Request = unirest.post('http://admin:1234@192.168.1.73:10000/smartplug.cgi');
 
         Request
                 .type('text/xml')
                 .send(xml)
-                .headers({'Accept': 'application/json'})
+               // .headers({'Accept': 'application/json'})
                 .end(function(response){
-                    var parser = require('xml2json');
-                    var json = parser.toJson(response.body);
-                    res.set('Content-Type', 'application/json');
-                    return res.json(json);
+                   // var parser = require('xml2json');
+                  //  var json = parser.toJson(response.body);
+                   // res.set('Content-Type', 'application/json');
+                   console.log(response.body);
+                    return res.send(response.body);
                 });
 
     },
-    createXML: function (state) {
+    ON: function (req, res) {
 
-        var data = {
+        var reqType='ON';
+        var xml = this.createXML(reqType);
+        console.log(xml);
+        var unirest = require('unirest');
+
+
+        var Request = unirest.post('http://admin:1234@192.168.1.73:10000/smartplug.cgi');
+
+        Request
+                .type('text/xml')
+                .send(xml)
+               // .headers({'Accept': 'application/json'})
+                .end(function(response){
+                   // var parser = require('xml2json');
+                  //  var json = parser.toJson(response.body);
+                   // res.set('Content-Type', 'application/json');
+                   console.log(response.body);
+                    return res.send(response.body);
+                });
+
+    },
+    OFF: function (req, res) {
+
+        var reqType='OFF';
+        var xml = this.createXML(reqType);
+        console.log(xml);
+        var unirest = require('unirest');
+
+
+        var Request = unirest.post('http://admin:1234@192.168.1.73:10000/smartplug.cgi');
+
+        Request
+                .type('text/xml')
+                .send(xml)
+               // .headers({'Accept': 'application/json'})
+                .end(function(response){
+                   // var parser = require('xml2json');
+                  //  var json = parser.toJson(response.body);
+                   // res.set('Content-Type', 'application/json');
+                   console.log(response.body);
+                    return res.send(response.body);
+                });
+
+    },
+    STATUS: function (req, res) {
+
+        var reqType='STATUS';
+        var xml = this.createXML(reqType);
+        console.log(xml);
+        var unirest = require('unirest');
+
+
+        var Request = unirest.post('http://admin:1234@192.168.1.73:10000/smartplug.cgi');
+
+        Request
+                .type('text/xml')
+                .send(xml)
+               // .headers({'Accept': 'application/json'})
+                .end(function(response){
+                   // var parser = require('xml2json');
+                  //  var json = parser.toJson(response.body);
+                   // res.set('Content-Type', 'application/json');
+                   console.log(response.body);
+                    return res.send(response.body);
+                });
+
+    },
+    NOW_POWER: function (req, res) {
+
+        var reqType='NOW_POWER';
+        var xml = this.createXML(reqType);
+        console.log(xml);
+        var unirest = require('unirest');
+
+
+        var Request = unirest.post('http://admin:1234@192.168.1.73:10000/smartplug.cgi');
+
+        Request
+                .type('text/xml')
+                .send(xml)
+               // .headers({'Accept': 'application/json'})
+                .end(function(response){
+                   // var parser = require('xml2json');
+                  //  var json = parser.toJson(response.body);
+                   // res.set('Content-Type', 'application/json');
+                   console.log(response.body);
+                    return res.send(response.body);
+                });
+
+    },
+     ENERGY_METER: function (req, res) {
+
+        var reqType='ENERGY_METER';
+        var xml = this.createXML(reqType);
+        console.log(xml);
+        var unirest = require('unirest');
+
+
+        var Request = unirest.post('http://admin:1234@192.168.1.73:10000/smartplug.cgi');
+
+        Request
+                .type('text/xml')
+                .send(xml)
+               // .headers({'Accept': 'application/json'})
+                .end(function(response){
+                   // var parser = require('xml2json');
+                  //  var json = parser.toJson(response.body);
+                   // res.set('Content-Type', 'application/json');
+                   console.log(response.body);
+                    return res.send(response.body);
+                });
+
+    },
+    createXML: function (requestType) {
+
+        var data=null;
+        if(requestType=='ON')
+        {
+            data = {
             _name: 'SMARTPLUG',
             _attrs: {
                 id: 'edimax'
@@ -73,10 +193,122 @@ module.exports = {
                 },
                 _content: {
                     _name: 'Device.System.Power.State',
-                    _content: state.toUpperCase()
+                    _content: 'ON'
                 }
-            }
-        };
+             }
+            };
+         }
+        else if(requestType=='OFF')
+        {
+              data = {
+                _name: 'SMARTPLUG',
+                _attrs: {
+                    id: 'edimax'
+                },
+                _content: {
+                    _name: 'CMD',
+                    _attrs: {
+                        id: 'setup',
+                    },
+                    _content: {
+                        _name: 'Device.System.Power.State',
+                        _content: 'OFF'
+                    }
+                }
+            };
+         }
+         else if(requestType=='STATUS')
+         {
+             data = {
+                _name: 'SMARTPLUG',
+                _attrs: {
+                    id: 'edimax'
+                },
+                _content: {
+                    _name: 'CMD',
+                    _attrs: {
+                        id: 'get',
+                    },
+                    _content: {
+                        _name: 'Device.System.Power.State',                   
+                    }
+                }
+            };
+         }
+         else if(requestType=='NOW_POWER')
+         {
+             data = {
+                _name: 'SMARTPLUG',
+                _attrs: {
+                    id: 'edimax'
+                },
+                _content: {
+                    _name: 'CMD',
+                    _attrs: {
+                        id: 'get',
+                    },
+                    _content: {
+                        _name : "NOW_POWER",
+                        _content : [
+                            {
+                                _name : 'Device.System.Power.NowCurrent'
+                            },
+                            {
+                                _name : 'Device.System.Power.NowPower'
+                            }
+                        ]
+                    }
+
+                }
+            };
+         }
+         else if(requestType=='ENERGY_METER')
+         {
+              data = {
+                _name: 'SMARTPLUG',
+                _attrs: {
+                    id: 'edimax'
+                },
+                _content: {
+                    _name: 'CMD',
+                    _attrs: {
+                        id: 'get',
+                    },
+                    _content: {
+                        _name : "NOW_POWER",
+                        _content : [
+                            {
+                                _name : 'Device.System.Power.NowEnergy.Day'
+                            },
+                            {
+                                _name : 'Device.System.Power.NowEnergy.Week'
+                            },
+                            {
+                                _name : 'Device.System.Power.NowEnergy.Month'
+                            }
+                        ]
+                    }
+
+                }
+            };
+         }
+
+//        var data = {
+//            _name: 'SMARTPLUG',
+//            _attrs: {
+//                id: 'edimax'
+//            },
+//            _content: {
+//                _name: 'CMD',
+//                _attrs: {
+//                    id: 'setup',
+//                },
+//                _content: {
+//                    _name: 'Device.System.Power.State',
+//                    _content: 'OFF'
+//                }
+//            }
+//        };
 
 //        var data = {
 //            _name: 'SMARTPLUG',
