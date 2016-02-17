@@ -26,7 +26,7 @@ module.exports = {
 
 
     },
-    status: function (req, res) {
+    urlstatus: function (req, res) {
 
         var urls = [];
 
@@ -46,7 +46,7 @@ module.exports = {
         var unirest = require('unirest');
 
 
-        var Request = unirest.post('http://admin:1234@192.168.1.73:10000/smartplug.cgi');
+        var Request = unirest.post('http://admin:1234@192.168.1.239:10000/smartplug.cgi');
 
         Request
                 .type('text/xml')
@@ -69,7 +69,7 @@ module.exports = {
         var unirest = require('unirest');
 
 
-        var Request = unirest.post('http://admin:1234@192.168.1.73:10000/smartplug.cgi');
+        var Request = unirest.post('http://admin:1234@192.168.1.239:10000/smartplug.cgi');
 
         Request
                 .type('text/xml')
@@ -92,7 +92,7 @@ module.exports = {
         var unirest = require('unirest');
 
 
-        var Request = unirest.post('http://admin:1234@192.168.1.73:10000/smartplug.cgi');
+        var Request = unirest.post('http://admin:1234@192.168.1.239:10000/smartplug.cgi');
 
         Request
                 .type('text/xml')
@@ -115,7 +115,7 @@ module.exports = {
         var unirest = require('unirest');
 
 
-        var Request = unirest.post('http://admin:1234@192.168.1.73:10000/smartplug.cgi');
+        var Request = unirest.post('http://admin:1234@192.168.1.239:10000/smartplug.cgi');
 
         Request
                 .type('text/xml')
@@ -138,7 +138,7 @@ module.exports = {
         var unirest = require('unirest');
 
 
-        var Request = unirest.post('http://admin:1234@192.168.1.73:10000/smartplug.cgi');
+        var Request = unirest.post('http://admin:1234@192.168.1.239:10000/smartplug.cgi');
 
         Request
                 .type('text/xml')
