@@ -81,20 +81,10 @@ module.exports = {
          {
              if(sails.config.globals.EdimaxDevice[j].mac==MAC)
              {
-                 if(plugIP!=null)
-                 {
-                    if(sails.config.globals.EdimaxDevice[j].ip!=plugIP)
-                    {
-                        console.log('IP Found in Local ');
-                        sails.config.globals.EdimaxDevice[j].ip=plugIP;
-                        plugIP= sails.config.globals.EdimaxDevice[j].ip;
-                        countLocal=1;
-                   }
-                   else
-                       console.log('IP Found in Local ');
-                       plugIP= sails.config.globals.EdimaxDevice[j].ip;
-                 }
-             }   
+                console.log('IP Found in Local ');                
+                plugIP= sails.config.globals.EdimaxDevice[j].ip;
+                countLocal=1;
+             }
          }
         if (countNetwork==1 && countLocal==0)
         {        
@@ -138,16 +128,36 @@ module.exports = {
 
         var MAC=req.param('MAC');
         var plugIP=null;
-       // console.log("ON - "+MAC);
-        for (var i in sails.config.globals.network) {
-            //console.log("loop MAC - "+sails.config.globals.network[i].mac);
-           // console.log("loop MAC - "+sails.config.globals.network[i].ip);
+        var countNetwork=0;
+        var countLocal=0;
+        for (var i in sails.config.globals.network) 
+        {          
             if(sails.config.globals.network[i].mac==MAC)
             {
+                console.log('IP Found in Netwotk ');
                 plugIP= sails.config.globals.network[i].ip;
-               // console.log("plugIP -"+plugIP);
-             }
+                countNetwork=1;
+            }           
        }
+        
+       for (var j in sails.config.globals.EdimaxDevice)
+         {
+             if(sails.config.globals.EdimaxDevice[j].mac==MAC)
+             {
+                console.log('IP Found in Local ');                
+                plugIP= sails.config.globals.EdimaxDevice[j].ip;
+                countLocal=1;
+             }
+         }
+        if (countNetwork==1 && countLocal==0)
+        {        
+            var newDevice = {
+                    ip: plugIP,
+                    mac: MAC,
+                };
+               console.log("push 0");
+               sails.config.globals.EdimaxDevice.push(newDevice);
+        }
        if(plugIP==null)
         {
            return res.send("Plug Not Found");
@@ -180,16 +190,36 @@ module.exports = {
 
         var MAC=req.param('MAC');
         var plugIP=null;
-        //console.log("ON - "+MAC);
-        for (var i in sails.config.globals.network) {
-          //  console.log("loop MAC - "+sails.config.globals.network[i].mac);
-           // console.log("loop MAC - "+sails.config.globals.network[i].ip);
+        var countNetwork=0;
+        var countLocal=0;
+         for (var i in sails.config.globals.network) 
+        {          
             if(sails.config.globals.network[i].mac==MAC)
             {
+                console.log('IP Found in Netwotk ');
                 plugIP= sails.config.globals.network[i].ip;
-            //    console.log("plugIP -"+plugIP);
-             }
+                countNetwork=1;
+            }           
        }
+        
+        for (var j in sails.config.globals.EdimaxDevice)
+         {
+             if(sails.config.globals.EdimaxDevice[j].mac==MAC)
+             {
+                console.log('IP Found in Local ');                
+                plugIP= sails.config.globals.EdimaxDevice[j].ip;
+                countLocal=1;
+             }
+         }
+        if (countNetwork==1 && countLocal==0)
+        {        
+            var newDevice = {
+                    ip: plugIP,
+                    mac: MAC,
+                };
+               console.log("push 0");
+               sails.config.globals.EdimaxDevice.push(newDevice);
+        }
        if(plugIP==null)
         {
            return res.send("Plug Not Found");
@@ -221,16 +251,36 @@ module.exports = {
 
         var MAC=req.param('MAC');
         var plugIP=null;
-       // console.log("ON - "+MAC);
-        for (var i in sails.config.globals.network) {
-         //   console.log("loop MAC - "+sails.config.globals.network[i].mac);
-         //   console.log("loop MAC - "+sails.config.globals.network[i].ip);
+        var countNetwork=0;
+        var countLocal=0;
+        for (var i in sails.config.globals.network) 
+        {          
             if(sails.config.globals.network[i].mac==MAC)
             {
+                console.log('IP Found in Netwotk ');
                 plugIP= sails.config.globals.network[i].ip;
-          //      console.log("plugIP -"+plugIP);
-             }
+                countNetwork=1;
+            }           
        }
+        
+        for (var j in sails.config.globals.EdimaxDevice)
+         {
+             if(sails.config.globals.EdimaxDevice[j].mac==MAC)
+             {
+                console.log('IP Found in Local ');                
+                plugIP= sails.config.globals.EdimaxDevice[j].ip;
+                countLocal=1;
+             }
+         }
+        if (countNetwork==1 && countLocal==0)
+        {        
+            var newDevice = {
+                    ip: plugIP,
+                    mac: MAC,
+                };
+               console.log("push 0");
+               sails.config.globals.EdimaxDevice.push(newDevice);
+        }
        if(plugIP==null)
         {
            return res.send("Plug Not Found");
@@ -262,16 +312,36 @@ module.exports = {
 
         var MAC=req.param('MAC');
         var plugIP=null;
-      //  console.log("ON - "+MAC);
-        for (var i in sails.config.globals.network) {
-          //  console.log("loop MAC - "+sails.config.globals.network[i].mac);
-           // console.log("loop MAC - "+sails.config.globals.network[i].ip);
+        var countNetwork=0;
+        var countLocal=0;
+        for (var i in sails.config.globals.network) 
+        {          
             if(sails.config.globals.network[i].mac==MAC)
             {
+                console.log('IP Found in Netwotk ');
                 plugIP= sails.config.globals.network[i].ip;
-             //   console.log("plugIP -"+plugIP);
-             }
+                countNetwork=1;
+            }           
        }
+        
+        for (var j in sails.config.globals.EdimaxDevice)
+         {
+             if(sails.config.globals.EdimaxDevice[j].mac==MAC)
+             {
+                console.log('IP Found in Local ');                
+                plugIP= sails.config.globals.EdimaxDevice[j].ip;
+                countLocal=1;
+             }
+         }
+        if (countNetwork==1 && countLocal==0)
+        {        
+            var newDevice = {
+                    ip: plugIP,
+                    mac: MAC,
+                };
+               console.log("push 0");
+               sails.config.globals.EdimaxDevice.push(newDevice);
+        }
        if(plugIP==null)
         {
            return res.send("Plug Not Found");
