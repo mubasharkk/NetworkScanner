@@ -27,7 +27,8 @@
     "node-schedule" : "*",
     "jsontoxml" : "*",
     "xml2json" : "*",
-    "unirest" : "*"
+    "unirest" : "*",
+    "network" : "*"
   },
   "scripts": {
     "debug": "node debug app.js",

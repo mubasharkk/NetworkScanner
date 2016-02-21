@@ -2,20 +2,32 @@
 module.exports = function scanner() {
 
     var nmap = require('node-libnmap');
-    var opts = {
+    var network = require('network');
+
+    network.get_gateway_ip(function(err, ip) {
+        
+        console.log(err || ip);       
+        echo(ip);
+      });
+  
+    echo= function(ip){
+      //console.log('inside eco'+ip); 
+     // console.log((ip+"").substring(0,10)+"*");
+      var opts = {
         range: [
-            '192.168.1.1-200',
+            ip+"-255",
         ],
         flags: ['-sP'],
         ports: '',
     };
     
-    sails.config.globals.network = [];
+   // sails.config.globals.network = [];
     
     nmap.scan(opts, function (err, report) {
         if (err)
             throw new Error(err);
         console.log('-- Gathering Network Info --');
+        sails.config.globals.network = [];
         for (var item in report) {
             for (var i in report[item].host) {
 
@@ -33,4 +45,9 @@ module.exports = function scanner() {
         }
 
     });
+      
+      
+    };
+   
+   
 }

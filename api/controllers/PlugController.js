@@ -29,13 +29,14 @@ module.exports = {
     urlstatus: function (req, res) {
 
         var urls = [];
-
+        
         for (var i in sails.config.globals.network) {
             var ip = 'http://' + sails.config.globals.network[i].ip;
 
-            urls.push(sails.config.globals.edimaxUrl.replace("{ip}", ip));
+           // urls.push(sails.config.globals.edimaxUrl.replace("{ip}", ip));
+            urls.push(sails.config.globals.network[i].ip +" AND "+sails.config.globals.network[i].mac)
         }
-
+        
         return res.json(urls);
     },
     test: function (req, res) {
@@ -46,7 +47,7 @@ module.exports = {
         var unirest = require('unirest');
 
 
-        var Request = unirest.post('http://admin:1234@192.168.1.239:10000/smartplug.cgi');
+        var Request = unirest.post('http://admin:1234@192.168.2.103:10000/smartplug.cgi');
 
         Request
                 .type('text/xml')
@@ -62,14 +63,26 @@ module.exports = {
 
     },
     ON: function (req, res) {
-
+        var MAC=req.param('MAC');
+        var plugIP=null;
+        //console.log("ON - "+MAC);
+        for (var i in sails.config.globals.network) {
+           // console.log("loop MAC - "+sails.config.globals.network[i].mac);
+           // console.log("loop MAC - "+sails.config.globals.network[i].ip);
+            if(sails.config.globals.network[i].mac==MAC)
+            {
+                plugIP= sails.config.globals.network[i].ip;
+               // console.log("plugIP -"+plugIP);
+             }
+       }
+        
         var reqType='ON';
         var xml = this.createXML(reqType);
         console.log(xml);
         var unirest = require('unirest');
 
 
-        var Request = unirest.post('http://admin:1234@192.168.1.239:10000/smartplug.cgi');
+        var Request = unirest.post('http://admin:1234@'+plugIP+':10000/smartplug.cgi');
 
         Request
                 .type('text/xml')
@@ -86,13 +99,25 @@ module.exports = {
     },
     OFF: function (req, res) {
 
+        var MAC=req.param('MAC');
+        var plugIP=null;
+       // console.log("ON - "+MAC);
+        for (var i in sails.config.globals.network) {
+            //console.log("loop MAC - "+sails.config.globals.network[i].mac);
+           // console.log("loop MAC - "+sails.config.globals.network[i].ip);
+            if(sails.config.globals.network[i].mac==MAC)
+            {
+                plugIP= sails.config.globals.network[i].ip;
+               // console.log("plugIP -"+plugIP);
+             }
+       }
         var reqType='OFF';
         var xml = this.createXML(reqType);
         console.log(xml);
         var unirest = require('unirest');
 
 
-        var Request = unirest.post('http://admin:1234@192.168.1.239:10000/smartplug.cgi');
+        var Request = unirest.post('http://admin:1234@'+plugIP+':10000/smartplug.cgi');
 
         Request
                 .type('text/xml')
@@ -109,13 +134,25 @@ module.exports = {
     },
     STATUS: function (req, res) {
 
+        var MAC=req.param('MAC');
+        var plugIP=null;
+        //console.log("ON - "+MAC);
+        for (var i in sails.config.globals.network) {
+          //  console.log("loop MAC - "+sails.config.globals.network[i].mac);
+           // console.log("loop MAC - "+sails.config.globals.network[i].ip);
+            if(sails.config.globals.network[i].mac==MAC)
+            {
+                plugIP= sails.config.globals.network[i].ip;
+            //    console.log("plugIP -"+plugIP);
+             }
+       }
         var reqType='STATUS';
         var xml = this.createXML(reqType);
         console.log(xml);
         var unirest = require('unirest');
 
 
-        var Request = unirest.post('http://admin:1234@192.168.1.239:10000/smartplug.cgi');
+        var Request = unirest.post('http://admin:1234@'+plugIP+':10000/smartplug.cgi');
 
         Request
                 .type('text/xml')
@@ -132,13 +169,25 @@ module.exports = {
     },
     NOW_POWER: function (req, res) {
 
+        var MAC=req.param('MAC');
+        var plugIP=null;
+       // console.log("ON - "+MAC);
+        for (var i in sails.config.globals.network) {
+         //   console.log("loop MAC - "+sails.config.globals.network[i].mac);
+         //   console.log("loop MAC - "+sails.config.globals.network[i].ip);
+            if(sails.config.globals.network[i].mac==MAC)
+            {
+                plugIP= sails.config.globals.network[i].ip;
+          //      console.log("plugIP -"+plugIP);
+             }
+       }
         var reqType='NOW_POWER';
         var xml = this.createXML(reqType);
         console.log(xml);
         var unirest = require('unirest');
 
 
-        var Request = unirest.post('http://admin:1234@192.168.1.239:10000/smartplug.cgi');
+         var Request = unirest.post('http://admin:1234@'+plugIP+':10000/smartplug.cgi');
 
         Request
                 .type('text/xml')
@@ -155,13 +204,25 @@ module.exports = {
     },
      ENERGY_METER: function (req, res) {
 
+        var MAC=req.param('MAC');
+        var plugIP=null;
+      //  console.log("ON - "+MAC);
+        for (var i in sails.config.globals.network) {
+          //  console.log("loop MAC - "+sails.config.globals.network[i].mac);
+           // console.log("loop MAC - "+sails.config.globals.network[i].ip);
+            if(sails.config.globals.network[i].mac==MAC)
+            {
+                plugIP= sails.config.globals.network[i].ip;
+             //   console.log("plugIP -"+plugIP);
+             }
+       }
         var reqType='ENERGY_METER';
         var xml = this.createXML(reqType);
         console.log(xml);
         var unirest = require('unirest');
 
 
-        var Request = unirest.post('http://admin:1234@192.168.1.73:10000/smartplug.cgi');
+        var Request = unirest.post('http://admin:1234@'+plugIP+':10000/smartplug.cgi');
 
         Request
                 .type('text/xml')
