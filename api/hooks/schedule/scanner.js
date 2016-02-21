@@ -10,22 +10,7 @@ module.exports = function scanner() {
         console.log(err || ip);       
         echo(ip);
       });
-    
-//    if (sails.config.globals.EdimaxDevice.length<1)
-//    {
-//        for (var j in sails.config.globals.EdimaxDevice)
-//        {
-//            var session = ping.createSession ();
-//            var target=sails.config.globals.EdimaxDevice[j].ip;
-//            session.pingHost (target, function (error, target) {
-//                if (error)
-//                    console.log (target + ": " + error.toString ());
-//                else
-//                    console.log (target + ": Alive");
-//            });
-//        }
-//    }
-//  
+
     echo= function(ip){
       var opts = {
         range: [
@@ -59,6 +44,43 @@ module.exports = function scanner() {
       
       
     };
+    
+    for (var j in sails.config.globals.EdimaxDevice)
+    {
+        if(sails.config.globals.EdimaxDevice[j].ip!=null)
+        {
+             var unirest = require('unirest');
+             var jstoxml = require('jstoxml');            
+             var data = {
+                _name: 'SMARTPLUG',
+                _attrs: {
+                    id: 'edimax'
+                },
+                _content: {
+                    _name: 'CMD',
+                    _attrs: {
+                        id: 'get',
+                    },
+                    _content: {
+                        _name: 'Device.System.Power.State',                   
+                    }
+                }
+            };
+            var xml=jstoxml.toXML(data, {header: true, indent: '  '});
+
+            var Request = unirest.post('http://admin:1234@'+sails.config.globals.EdimaxDevice[j].ip+':10000/smartplug.cgi');
+
+            Request
+                    .type('text/xml')
+                    .send(xml)
+                    .end(function(response){                     
+                       console.log(response.body);
+                       
+                    });
+        }
+        
+        
+    }
    
    
 }
