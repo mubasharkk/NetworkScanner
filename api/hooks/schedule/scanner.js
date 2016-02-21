@@ -3,26 +3,37 @@ module.exports = function scanner() {
 
     var nmap = require('node-libnmap');
     var network = require('network');
+   // var ping = require ("net-ping");    
 
     network.get_gateway_ip(function(err, ip) {
         
         console.log(err || ip);       
         echo(ip);
       });
-  
+    
+//    if (sails.config.globals.EdimaxDevice.length<1)
+//    {
+//        for (var j in sails.config.globals.EdimaxDevice)
+//        {
+//            var session = ping.createSession ();
+//            var target=sails.config.globals.EdimaxDevice[j].ip;
+//            session.pingHost (target, function (error, target) {
+//                if (error)
+//                    console.log (target + ": " + error.toString ());
+//                else
+//                    console.log (target + ": Alive");
+//            });
+//        }
+//    }
+//  
     echo= function(ip){
-      //console.log('inside eco'+ip); 
-     // console.log((ip+"").substring(0,10)+"*");
       var opts = {
         range: [
             ip+"-255",
         ],
         flags: ['-sP'],
         ports: '',
-    };
-    
-   // sails.config.globals.network = [];
-    
+     };    
     nmap.scan(opts, function (err, report) {
         if (err)
             throw new Error(err);
@@ -44,7 +55,7 @@ module.exports = function scanner() {
             }
         }
 
-    });
+        });
       
       
     };

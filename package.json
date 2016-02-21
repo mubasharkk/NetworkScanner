@@ -29,6 +29,7 @@
     "xml2json" : "*",
     "unirest" : "*",
     "network" : "*"
+    
   },
   "scripts": {
     "debug": "node debug app.js",

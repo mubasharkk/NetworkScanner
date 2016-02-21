@@ -17,6 +17,7 @@ module.exports.globals = {
 
      */
     network : [],
+    EdimaxDevice : [],
     
     
     edimaxUrl : '{ip}:10000/smartplug.cgi',

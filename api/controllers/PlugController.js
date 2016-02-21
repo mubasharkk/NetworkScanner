@@ -65,36 +65,73 @@ module.exports = {
     ON: function (req, res) {
         var MAC=req.param('MAC');
         var plugIP=null;
-        //console.log("ON - "+MAC);
-        for (var i in sails.config.globals.network) {
-           // console.log("loop MAC - "+sails.config.globals.network[i].mac);
-           // console.log("loop MAC - "+sails.config.globals.network[i].ip);
+        var countNetwork=0;
+        var countLocal=0;
+        for (var i in sails.config.globals.network) 
+        {          
             if(sails.config.globals.network[i].mac==MAC)
             {
+                console.log('IP Found in Netwotk ');
                 plugIP= sails.config.globals.network[i].ip;
-               // console.log("plugIP -"+plugIP);
-             }
+                countNetwork=1;
+            }           
        }
         
-        var reqType='ON';
-        var xml = this.createXML(reqType);
-        console.log(xml);
-        var unirest = require('unirest');
+        for (var j in sails.config.globals.EdimaxDevice)
+         {
+             if(sails.config.globals.EdimaxDevice[j].mac==MAC)
+             {
+                 if(plugIP!=null)
+                 {
+                    if(sails.config.globals.EdimaxDevice[j].ip!=plugIP)
+                    {
+                        console.log('IP Found in Local ');
+                        sails.config.globals.EdimaxDevice[j].ip=plugIP;
+                        plugIP= sails.config.globals.EdimaxDevice[j].ip;
+                        countLocal=1;
+                   }
+                   else
+                       console.log('IP Found in Local ');
+                       plugIP= sails.config.globals.EdimaxDevice[j].ip;
+                 }
+             }   
+         }
+        if (countNetwork==1 && countLocal==0)
+        {        
+            var newDevice = {
+                    ip: plugIP,
+                    mac: MAC,
+                };
+               console.log("push 0");
+               sails.config.globals.EdimaxDevice.push(newDevice);
+        }
+        if(plugIP==null)
+        {
+           return res.send("Plug Not Found");
+        }
+        else
+        {
+            var reqType='ON';
+            var xml = this.createXML(reqType);
+            console.log(xml);
+            var unirest = require('unirest');
 
 
-        var Request = unirest.post('http://admin:1234@'+plugIP+':10000/smartplug.cgi');
+            var Request = unirest.post('http://admin:1234@'+plugIP+':10000/smartplug.cgi');
 
-        Request
-                .type('text/xml')
-                .send(xml)
-               // .headers({'Accept': 'application/json'})
-                .end(function(response){
-                   // var parser = require('xml2json');
-                  //  var json = parser.toJson(response.body);
-                   // res.set('Content-Type', 'application/json');
-                   console.log(response.body);
-                    return res.send(response.body);
-                });
+            Request
+                    .type('text/xml')
+                    .send(xml)
+                   // .headers({'Accept': 'application/json'})
+                    .end(function(response){
+                       // var parser = require('xml2json');
+                      //  var json = parser.toJson(response.body);
+                       // res.set('Content-Type', 'application/json');
+                       console.log(response.body);
+                        return res.send(response.body);
+                    });
+            }
+
 
     },
     OFF: function (req, res) {
@@ -111,26 +148,33 @@ module.exports = {
                // console.log("plugIP -"+plugIP);
              }
        }
-        var reqType='OFF';
-        var xml = this.createXML(reqType);
-        console.log(xml);
-        var unirest = require('unirest');
+       if(plugIP==null)
+        {
+           return res.send("Plug Not Found");
+        }
+        else
+        {
+            var reqType='OFF';
+            var xml = this.createXML(reqType);
+            console.log(xml);
+            var unirest = require('unirest');
 
 
-        var Request = unirest.post('http://admin:1234@'+plugIP+':10000/smartplug.cgi');
+            var Request = unirest.post('http://admin:1234@'+plugIP+':10000/smartplug.cgi');
 
-        Request
-                .type('text/xml')
-                .send(xml)
-               // .headers({'Accept': 'application/json'})
-                .end(function(response){
-                   // var parser = require('xml2json');
-                  //  var json = parser.toJson(response.body);
-                   // res.set('Content-Type', 'application/json');
-                   console.log(response.body);
-                    return res.send(response.body);
-                });
+            Request
+                    .type('text/xml')
+                    .send(xml)
+                   // .headers({'Accept': 'application/json'})
+                    .end(function(response){
+                       // var parser = require('xml2json');
+                      //  var json = parser.toJson(response.body);
+                       // res.set('Content-Type', 'application/json');
+                       console.log(response.body);
+                        return res.send(response.body);
+                    });
 
+        }
     },
     STATUS: function (req, res) {
 
@@ -146,26 +190,32 @@ module.exports = {
             //    console.log("plugIP -"+plugIP);
              }
        }
-        var reqType='STATUS';
-        var xml = this.createXML(reqType);
-        console.log(xml);
-        var unirest = require('unirest');
+       if(plugIP==null)
+        {
+           return res.send("Plug Not Found");
+        }
+        else
+        {
+            var reqType='STATUS';
+            var xml = this.createXML(reqType);
+            console.log(xml);
+            var unirest = require('unirest');
 
 
-        var Request = unirest.post('http://admin:1234@'+plugIP+':10000/smartplug.cgi');
+            var Request = unirest.post('http://admin:1234@'+plugIP+':10000/smartplug.cgi');
 
-        Request
-                .type('text/xml')
-                .send(xml)
-               // .headers({'Accept': 'application/json'})
-                .end(function(response){
-                   // var parser = require('xml2json');
-                  //  var json = parser.toJson(response.body);
-                   // res.set('Content-Type', 'application/json');
-                   console.log(response.body);
-                    return res.send(response.body);
-                });
-
+            Request
+                    .type('text/xml')
+                    .send(xml)
+                   // .headers({'Accept': 'application/json'})
+                    .end(function(response){
+                       // var parser = require('xml2json');
+                      //  var json = parser.toJson(response.body);
+                       // res.set('Content-Type', 'application/json');
+                       console.log(response.body);
+                        return res.send(response.body);
+                    });
+        }
     },
     NOW_POWER: function (req, res) {
 
@@ -181,26 +231,32 @@ module.exports = {
           //      console.log("plugIP -"+plugIP);
              }
        }
-        var reqType='NOW_POWER';
-        var xml = this.createXML(reqType);
-        console.log(xml);
-        var unirest = require('unirest');
+       if(plugIP==null)
+        {
+           return res.send("Plug Not Found");
+        }
+        else
+        {
+            var reqType='NOW_POWER';
+            var xml = this.createXML(reqType);
+            console.log(xml);
+            var unirest = require('unirest');
 
 
-         var Request = unirest.post('http://admin:1234@'+plugIP+':10000/smartplug.cgi');
+             var Request = unirest.post('http://admin:1234@'+plugIP+':10000/smartplug.cgi');
 
-        Request
-                .type('text/xml')
-                .send(xml)
-               // .headers({'Accept': 'application/json'})
-                .end(function(response){
-                   // var parser = require('xml2json');
-                  //  var json = parser.toJson(response.body);
-                   // res.set('Content-Type', 'application/json');
-                   console.log(response.body);
-                    return res.send(response.body);
-                });
-
+            Request
+                    .type('text/xml')
+                    .send(xml)
+                   // .headers({'Accept': 'application/json'})
+                    .end(function(response){
+                       // var parser = require('xml2json');
+                      //  var json = parser.toJson(response.body);
+                       // res.set('Content-Type', 'application/json');
+                       console.log(response.body);
+                        return res.send(response.body);
+                    });
+        }
     },
      ENERGY_METER: function (req, res) {
 
@@ -216,26 +272,32 @@ module.exports = {
              //   console.log("plugIP -"+plugIP);
              }
        }
-        var reqType='ENERGY_METER';
-        var xml = this.createXML(reqType);
-        console.log(xml);
-        var unirest = require('unirest');
+       if(plugIP==null)
+        {
+           return res.send("Plug Not Found");
+        }
+        else
+        {
+            var reqType='ENERGY_METER';
+            var xml = this.createXML(reqType);
+            console.log(xml);
+            var unirest = require('unirest');
 
 
-        var Request = unirest.post('http://admin:1234@'+plugIP+':10000/smartplug.cgi');
+            var Request = unirest.post('http://admin:1234@'+plugIP+':10000/smartplug.cgi');
 
-        Request
-                .type('text/xml')
-                .send(xml)
-               // .headers({'Accept': 'application/json'})
-                .end(function(response){
-                   // var parser = require('xml2json');
-                  //  var json = parser.toJson(response.body);
-                   // res.set('Content-Type', 'application/json');
-                   console.log(response.body);
-                    return res.send(response.body);
-                });
-
+            Request
+                    .type('text/xml')
+                    .send(xml)
+                   // .headers({'Accept': 'application/json'})
+                    .end(function(response){
+                       // var parser = require('xml2json');
+                      //  var json = parser.toJson(response.body);
+                       // res.set('Content-Type', 'application/json');
+                       console.log(response.body);
+                        return res.send(response.body);
+                    });
+        }
     },
     createXML: function (requestType) {
 
@@ -400,7 +462,9 @@ module.exports = {
 
         return jstoxml.toXML(data, {header: true, indent: '  '});
 
-    }
+    },
+    
+   
 
 
 };
