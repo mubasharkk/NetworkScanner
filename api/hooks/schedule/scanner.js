@@ -14,7 +14,7 @@ module.exports = function scanner() {
     echo= function(ip){
       var opts = {
         range: [
-            ip+"-255",
+            ip+"-254",
         ],
         flags: ['-sP'],
         ports: '',
